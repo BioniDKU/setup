@@ -47,31 +47,32 @@ $hkF5trigger = @(
 )
 $hkF5settings = New-ScheduledTaskSettingsSet -DontStopIfGoingOnBatteries -AllowStartIfOnBatteries -StartWhenAvailable -MultipleInstances IgnoreNew
 $hkF5 = New-ScheduledTask -Action $hkF5action -Trigger $hkF5trigger -Settings $hkF5settings
-Register-ScheduledTask $hkF5name -InputObject $hkF5
+Register-ScheduledTask -TaskName $hkF5name -TaskPath '\BioniDKU\' -InputObject $hkF5
 
+$hkqmlname = "BioniDKU Menus System Hot Keys Service"
 $hkqmltrigger = @($(New-ScheduledTaskTrigger -AtLogon -User "$env:COMPUTERNAME\$env:USERNAME"))
-Register-ScheduledTask -xml (Get-Content "$env:SYSTEMDRIVE\Bionic\Hikaru\HikaruQML.xml" | Out-String) -TaskName "BioniDKU Menus System Hot Keys Service" -TaskPath "\" -User "$env:COMPUTERNAME\$env:USERNAME" -Force
-Set-ScheduledTask -TaskName "BioniDKU Menus System Hot Keys Service" -Trigger $hkqmltrigger
+Register-ScheduledTask -xml (Get-Content "$env:SYSTEMDRIVE\Bionic\Hikaru\HikaruQML.xml" | Out-String) -TaskName $hkqmlname -TaskPath '\BioniDKU\' -User "$env:COMPUTERNAME\$env:USERNAME" -Force
+Set-ScheduledTask -TaskName $hkqmlname -TaskPath '\BioniDKU\' -Trigger $hkqmltrigger
 
 $hkbpstname = 'BioniDKU Windows Build String Modifier'
 $hkbpaction = New-ScheduledTaskAction -Execute "%SystemDrive%\Bionic\Hikaru\HikaruBuildMod.exe"
 $hkbprincipal = New-ScheduledTaskPrincipal -UserID "$env:USERNAME" -LogonType Interactive -RunLevel Highest
 $hkbpsettings = New-ScheduledTaskSettingsSet -DontStopIfGoingOnBatteries -AllowStartIfOnBatteries -StartWhenAvailable -ExecutionTimeLimit 0 -MultipleInstances IgnoreNew
 $hkbp = New-ScheduledTask -Action $hkbpaction -Principal $hkbprincipal -Settings $hkbpsettings
-Register-ScheduledTask $hkbpstname -InputObject $hkbp
+Register-ScheduledTask -TaskName $hkbpstname -TaskPath '\BioniDKU\' -InputObject $hkbp
+
 $hklcstname = 'BioniDKU UWP Lockdown Controller'
 $hklcaction = New-ScheduledTaskAction -Execute "%SystemRoot%\System32\WindowsPowerShell\v1.0\powershell.exe" -Argument "-Command `"& %SystemDrive%\Bionic\Hikaru\ApplicationControlHost.ps1`""
 $hklcrincipal = New-ScheduledTaskPrincipal -UserID "NT AUTHORITY\SYSTEM" -LogonType ServiceAccount -RunLevel Highest
 $hklc = New-ScheduledTask -Action $hklcaction -Principal $hklcrincipal -Settings $hkbpsettings
-Register-ScheduledTask $hklcstname -InputObject $hklc
+Register-ScheduledTask -TaskName $hklcstname -TaskPath '\BioniDKU\' -InputObject $hklc
 
 # Allow non-elevated processes to execute the task that would otherwise require elevation to start
 # From: https://www.osdeploy.com/blog/2021/scheduled-tasks/task-permissions
 $Scheduler = New-Object -ComObject "Schedule.Service"; $Scheduler.Connect() 
-$hket = @()
-$hket += $hkbpstname; $hket += $hklcstname
+$hket = $hkF5name, $hkqmlname, $hkbpstname, $hklcstname
 foreach ($hketname in $hket) {
-	$GetTask = $Scheduler.GetFolder('\').GetTask($hketname)
+	$GetTask = $Scheduler.GetFolder('\BioniDKU').GetTask($hketname)
 	$GetSecurityDescriptor = $GetTask.GetSecurityDescriptor(0xF)
 	if ($GetSecurityDescriptor -notmatch 'A;;0x1200a9;;;AU') {
 		$GetSecurityDescriptor = $GetSecurityDescriptor + '(A;;GRGX;;;AU)'

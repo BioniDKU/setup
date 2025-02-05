@@ -28,12 +28,12 @@ while ($true) {
 	Write-Host -ForegroundColor Yellow "One of the main selling points of BioniDKU is its HUGE library of music, with over 60+ songs. Customize your selection by selecting your desired collections."
 	Write-Host -ForegroundColor Gray "The selected collections will be downloaded in Download mode, and all songs within them will be shuffled."
 	Write-Host -ForegroundColor Gray "(FYI, categories from 1 to 4 are game sound tracks. You can look up on the internet about those games. As for category `r`n5, it features works from independent composers or artists groups that I hand-picked.)"
-	Write-Host -ForegroundColor White "1. Touhou OSTs" -n;         Show-Disenabled 1 $hkm
-	Write-Host -ForegroundColor White "2. Genshin Impact OSTs" -n; Show-Disenabled 2 $hkm
-	Write-Host -ForegroundColor White "3. Deltarune OSTs" -n;      Show-Disenabled 3 $hkm
-	Write-Host -ForegroundColor White "4. Undertale OSTs" -n;      Show-Disenabled 4 $hkm
-	Write-Host -ForegroundColor White "5. Featured Artists" -n;    Show-Disenabled 5 $hkm
-	Write-Host -ForegroundColor White "Select 0 to return to the previous menu."
+	Write-Host -ForegroundColor White " 1. Touhou OSTs" -n;         Show-Disenabled 1 $hkm
+	Write-Host -ForegroundColor White " 2. Genshin Impact OSTs" -n; Show-Disenabled 2 $hkm
+	Write-Host -ForegroundColor White " 3. Deltarune OSTs" -n;      Show-Disenabled 3 $hkm
+	Write-Host -ForegroundColor White " 4. Undertale OSTs" -n;      Show-Disenabled 4 $hkm
+	Write-Host -ForegroundColor White " 5. Featured Artists" -n;    Show-Disenabled 5 $hkm
+	Write-Host -ForegroundColor White "Type R to return to the previous menu."
 	Write-Host " "
 	Write-Host "> " -n ; $colsel = Read-Host
 	
@@ -43,6 +43,6 @@ while ($true) {
 		"3" {Select-DisenabledCol 3}
 		"4" {Select-DisenabledCol 4}
 		"5" {Select-DisenabledCol 5}
-		"0" {exit}
+		{$_ -like "r"} {exit}
 	}
 }

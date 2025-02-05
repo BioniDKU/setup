@@ -53,11 +53,11 @@ function Show-Menu {
 	Show-Branding
 	$targetcheck = (Get-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate" -ErrorAction SilentlyContinue).TargetReleaseVersion
 	if ($wupdated -eq 1) {$wumenudflt0 = "(Default)"} else {$wumenudflt1 = "(Default)"}
-	Write-Host -ForegroundColor Yellow "What do you want to do?"
-	Write-Host -ForegroundColor White "1. Continue to Windows Update mode"  -n; Write-Host " $wumenudflt1"
-	Write-Host -ForegroundColor White "2. Switch to Wumgr for this session"
+	Write-Host -ForegroundColor Yellow " What do you want to do?"
+	Write-Host -ForegroundColor White " 1. Continue to Windows Update mode"  -n; Write-Host " $wumenudflt1"
+	Write-Host -ForegroundColor White " 2. Switch to Wumgr for this session"
 	if ($targetcheck -eq 1 -and $edition -notmatch "Core" -and $build -ge 17134 -and $wupdated -ne 1) {Write-Host -ForegroundColor White "3. I'm stuck at a Feature update!"}
-	Write-Host -ForegroundColor White "0. Leave Windows Update mode" -n; Write-Host " $wumenudflt0"
+	Write-Host -ForegroundColor White " R. Leave Windows Update mode" -n; Write-Host " $wumenudflt0"
 	Write-Host " "
 }
 function Show-Confirm {
@@ -146,21 +146,21 @@ $hkc = (Get-ItemProperty -Path "HKCU:\Software\AutoIDKU").Wucancel
 
 while($true) {
 	if ($hkc -eq 1) {Show-Menu}
-	Write-Host "> " -n ; if ($hkc -eq 1) {$hkchoice = Read-Host} else {$hkchoice = 4}
-	if ($hkc -eq 1 -and $hkchoice -ne 3) {Show-Confirm}
+	Write-Host "> " -n ; if ($hkc -eq 1) {$hkchoice = Read-Host} else {$hkchoice = "4"}
+	if ($hkc -eq 1 -and $hkchoice -ne "3") {Show-Confirm}
 	if ($wupdated -eq 1) {
 		switch ($hkchoice) {
-			1 {Start-UpdateMode}
-			2 {Start-UpdateMode "Wumgr"}
-			3 {Show-StuckHelp}
+			"1" {Start-UpdateMode}
+			"2" {Start-UpdateMode "Wumgr"}
+			"3" {Show-StuckHelp}
 			default {if ($hkc -eq 0) {Show-Branding}; Stop-UpdateMode "Success"}
 		}
 	} else {
 		switch ($hkchoice) {
 			default {if ($hkc -eq 0) {Show-Branding}; Start-UpdateMode}
-			2 {Start-UpdateMode "Wumgr"}
-			3 {Show-StuckHelp}
-			0 {Stop-UpdateMode "Aborted"}
+			"2" {Start-UpdateMode "Wumgr"}
+			"3" {Show-StuckHelp}
+			{$_ -like "r"} {Stop-UpdateMode "Aborted"}
 		}
 	}
 }

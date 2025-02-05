@@ -1,4 +1,4 @@
-# BioniDKU software downloader mode - Main file
+# BioniDKU software downloader mode - Main file (launches hikarug, utilsg and musicn.ps1 in order)
 #
 # The purpose is to save bandwidth, and later to allow you to have 
 # the main stage running completely offline without any problems
@@ -112,14 +112,13 @@ if ($hkau -eq 1) {
 	Start-Sleep -Seconds 3
 }
 
-Start-DownloadLoop "https://github.com/Bionic-OSE/BioniDKU/raw/main/PATCHME.ps1" "PATCHME.ps1" "Software versions information file"
+Start-DownloadLoop "https://github.com/Bionic-OSE/BioniCDN/raw/main/Patchinfo/PIF-BioniDKU.ps1" "PATCHME.ps1" "Software versions information file"
 . $datadir\dls\PATCHME.ps1
 
 Write-Host -ForegroundColor Cyan -BackgroundColor DarkGray "Getting Utilities package"
 Start-Process powershell -Wait -ArgumentList "-Command $coredir\servicing\utilsg.ps1"
 
 if ($hkau -eq 1) {
-	Start-DownloadLoop "https://github.com/Bionic-OSE/BioniDKU-music/raw/music/normal.ps1" "normal.ps1" "Music packages information file"
 	Write-Host -ForegroundColor Cyan -BackgroundColor DarkGray "Getting music packages"
 	Start-Process powershell -Wait -ArgumentList "-Command $coredir\music\musicn.ps1"
 }

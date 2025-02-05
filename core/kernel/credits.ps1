@@ -8,7 +8,7 @@ function Write-Hhhh($name,$link) {
 Write-Host "########## SECTION 1: BioniDKU License ##########" -ForegroundColor Black -BackgroundColor Cyan
 Write-Host -ForegroundColor White @"
  
- Project BioniDKU - Copyright (c) 2022-2024 Bionic Butter
+ Project BioniDKU - Copyright (c) 2022-2025 Bionic Butter
 
  This program is free software: you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
@@ -34,11 +34,11 @@ Write-Host "########### SECTION 2: BioniDKU Core ############" -ForegroundColor 
 Write-Host " "
 Write-Hhhh " - Microsoft PowerShell platform" ": https://learn.microsoft.com/en-us/powershell"
 Write-Host " - AutoIDKU" -ForegroundColor Green -n; Write-Host ": https://github.com/sunryze-git/AutoIDKU/tree/8f12315"
-Write-Hhhh " - 7-Zip CLI standalone" " (7za.exe & 7zxa.dll): https://www.7-zip.org/a/7z2201-extra.7z"
+Write-Hhhh " - 7-Zip CLI standalone" " (7za.exe & 7zxa.dll): https://www.7-zip.org"
 Write-Host " "
 Write-Host "###### SECTION 3: BioniDKU User experience ######" -ForegroundColor Black -BackgroundColor Cyan
 Write-Host " "
-Write-Host " Programs included in the Utilities package:" -ForegroundColor Blue
+Write-Host " Programs included in the Utilities package:" -ForegroundColor Cyan
 Write-Hhhh " - AutoHotKey" " (AddressBarRemover2, BioniDKU Menus Launcher tray app): https://www.autohotkey.com"
 Write-Hhhh " - AdvancedRun" " (Hikaru-chan): https://www.nirsoft.net/utils/advanced_run.html"
 Write-Hhhh " - PE Network Manager" ": https://www.penetworkmanager.de"
@@ -47,7 +47,7 @@ Write-Hhhh " - Classic Task manager & System Configuration" ": https://win7games
 Write-Hhhh " - WinXShell" " (Windows Update mode shell): https://theoven.org/viewtopic.php?t=89"
 Write-Hhhh " - Wu10Man" ": https://github.com/WereDev/Wu10Man"
 Write-Hhhh " - ContextMenuNormalizer" ": https://github.com/krlvm/ContextMenuNormalizer"
-Write-Host " Programs included in the Essential Apps kit:" -ForegroundColor Blue
+Write-Host " Programs included in the Essential Apps kit:" -ForegroundColor Cyan
 Write-Hhhh " - Winaero Tweaker" ": https://winaerotweaker.com"
 Write-Hhhh " - Open-Shell" ": https://github.com/Open-Shell/Open-Shell-Menu"
 Write-Hhhh " - T-Clock" ": https://github.com/White-Tiger/T-Clock"
@@ -56,7 +56,7 @@ Write-Hhhh " - ShareX" ": https://getsharex.com"
 Write-Hhhh " - Notepad++" ": https://notepad-plus-plus.org"
 Write-Hhhh " - DesktopInfo" ": https://www.glenn.delahoy.com/desktopinfo/"
 Write-Hhhh " - VLC" ": https://www.videolan.org/"
-Write-Host " Cosmetic elements:" -ForegroundColor Blue
+Write-Host " Cosmetic elements:" -ForegroundColor Cyan
 Write-Hhhh " - Desktop background" " (Normal mode): 
    https://www.reddit.com/r/Genshin_Impact/comments/sk74fe/chinju_forest_inazuma_viewpoint_art"
 Write-Hhhh " - Desktop background" " (Dark Sakura mode):
@@ -68,7 +68,7 @@ Write-Hhhh " - FFPlay" " (Hand-crafted music player):
 Write-Host " "
 Write-Host "####### SECTION 4: BioniDKU Contributors ########" -ForegroundColor Black -BackgroundColor Cyan
 Write-Host " "
-Write-Host " I would also like to thank the following people for making this script possible:" -ForegroundColor Blue
+Write-Host " I would also like to thank the following people for making this script possible:" -ForegroundColor Cyan
 Write-Host " (All usernames listed below are Discord usernames)"
 Write-Host " - AutoIDKU author" -ForegroundColor Green -n; Write-Host ": @sunryze"
 Write-Hhhh " - Volunteered testers" ": @juliastechspot, @zippykool, @strawtech8"

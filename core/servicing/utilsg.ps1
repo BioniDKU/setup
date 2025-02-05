@@ -22,8 +22,9 @@ Import-Module BitsTransfer
 . $coredir\7boot\versioninfo.ps1
 if (-not (Test-Path -Path "$datadir\utils")) {New-Item -Path $datadir -Name "utils" -itemType Directory | Out-Null}
 
+$utilscdn = "https://github.com/BioniDKU/resources/releases/download/$utag"
 while ($true) {
-	Start-BitsTransfer -DisplayName "Getting the Utilites package" -Description " " -Source "https://github.com/Bionic-OSE/BioniDKU-utils/releases/download/$utag/utils.7z" -Destination $datadir\utils -RetryInterval 60 -RetryTimeout 70 -ErrorAction SilentlyContinue
+	Start-BitsTransfer -DisplayName "Getting the Utilites package" -Description " " -Source "$utilscdn/utils.7z" -Destination $datadir\utils -RetryInterval 60 -RetryTimeout 70 -ErrorAction SilentlyContinue
 	if (Test-Path -Path "$datadir\utils\utils.7z" -PathType Leaf) {break} else {
 		Write-Host " "
 		Write-Host -ForegroundColor Black -BackgroundColor Red "Uhhhhhhh"

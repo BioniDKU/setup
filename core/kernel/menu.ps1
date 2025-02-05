@@ -145,12 +145,12 @@ function Show-MenuText($item) {
 			Show-WelcomeText
 			$stcolor = Show-StartAllowed
 			Show-Notice
-			Write-Host -ForegroundColor Yellow "What do you want to do?"
-			Write-Host -ForegroundColor $stcolor "1. Start the script"
-			Write-Host -ForegroundColor White "2. Configure the script"
-			Write-Host -ForegroundColor White "3. Further adjust the script (advanced)"
-			Write-Host -ForegroundColor White "4. Show credits"
-			Write-Host -ForegroundColor White "0. Exit this script`r`n"
+			Write-Host -ForegroundColor Yellow " What do you want to do?"
+			Write-Host -ForegroundColor $stcolor " 1. Start the script"
+			Write-Host -ForegroundColor White " 2. Configure the script"
+			Write-Host -ForegroundColor White " 3. Further adjust the script (advanced)"
+			Write-Host -ForegroundColor White " 4. Show credits"
+			Write-Host -ForegroundColor White " R. Exit this script`r`n"
 		}
 		"confign" {
 			Show-Branding clear
@@ -158,23 +158,23 @@ function Show-MenuText($item) {
 			$essentialapps = (Get-ItemProperty -Path "HKCU:\Software\AutoIDKU").EssentialApps
 			if ($build -eq 10240 -and $disablelogonbg) {$wucolor = "DarkGray"} else {$wucolor = "White"}
 			Write-Host -ForegroundColor Yellow "`Configure the script by tuning the following options to your desire."
-			Write-Host -ForegroundColor $wucolor "1. Toggle Windows Update mode" -n; if ($build -eq 10240 -and $disablelogonbg) {Write-Host " (FORCEFULLY ENABLED)" -ForegroundColor DarkGray} else {Show-Disenabled WUmodeSwitch}
-			Write-Host -ForegroundColor White "2. Keep System Restore enabled" -n; Show-Disenabled KeepSR
-			Write-Host -ForegroundColor White "3. Set desktop wallpaper to the one from the script" -n; Show-Disenabled SetWallpaper
-			Write-Host -ForegroundColor White "4. Increase wait time (ideal for remote setups)" -n; Show-Disenabled RunningThisRemotely
-			Write-Host -ForegroundColor White "5. Toggle background music" -n; Show-Disenabled HikaruMusic
-			if ($setupmusic -eq 1) {Write-Host -ForegroundColor White "6. Customize your music selection"}
-			Write-Host -ForegroundColor White "7. Toggle the installation of Essential Apps" -n; Show-Disenabled EssentialApps
-			if ($essentialapps -eq 1) {Write-Host -ForegroundColor White "8. Customize which Apps to install"}
-			Write-Host -ForegroundColor White "9. Toggle logging for troubleshooting purposes" -n; Show-Disenabled Transcribe
-			Write-Host -ForegroundColor White "0. Accept the current configuration and return to main menu`r`n"
+			Write-Host -ForegroundColor $wucolor " 1. Toggle Windows Update mode" -n; if ($build -eq 10240 -and $disablelogonbg) {Write-Host " (FORCEFULLY ENABLED)" -ForegroundColor DarkGray} else {Show-Disenabled WUmodeSwitch}
+			Write-Host -ForegroundColor White " 2. Keep System Restore enabled" -n; Show-Disenabled KeepSR
+			Write-Host -ForegroundColor White " 3. Set desktop wallpaper to the one from the script" -n; Show-Disenabled SetWallpaper
+			Write-Host -ForegroundColor White " 4. Increase wait time (ideal for remote setups)" -n; Show-Disenabled RunningThisRemotely
+			Write-Host -ForegroundColor White " 5. Toggle background music" -n; Show-Disenabled HikaruMusic
+			if ($setupmusic -eq 1) {Write-Host -ForegroundColor White " 6. Customize your music selection"}
+			Write-Host -ForegroundColor White " 7. Toggle the installation of Essential Apps" -n; Show-Disenabled EssentialApps
+			if ($essentialapps -eq 1) {Write-Host -ForegroundColor White " 8. Customize which Apps to install"}
+			Write-Host -ForegroundColor White " 9. Toggle logging for troubleshooting purposes" -n; Show-Disenabled Transcribe
+			Write-Host -ForegroundColor White " R. Accept the current configuration and return to main menu`r`n"
 		}
 		"configa" {
 			Show-ModulesConfig # This can be found at the very bottom of config.ps1
 			Write-Host -ForegroundColor Yellow "`r`nThen, select the following actions:"
-			Write-Host -ForegroundColor White "1. Open the script in Notepad to reconfigure the options,"
-			Write-Host -ForegroundColor White "   it will wait for you and refresh once you close Notepad"
-			Write-Host -ForegroundColor White "0. Accept the current configuration and return to main menu" -n; Write-Host " (Default answer)`r`n"
+			Write-Host -ForegroundColor White " 1. Open the script in Notepad to reconfigure the options,"
+			Write-Host -ForegroundColor White "    it will wait for you and refresh once you close Notepad"
+			Write-Host -ForegroundColor White " R. Accept the current configuration and return to main menu" -n; Write-Host " (Default answer)`r`n"
 		}
 	}
 }
@@ -224,7 +224,7 @@ while ($true) {
 					"7" {Select-Disenabled EssentialApps}
 					"8" {if ($essentialapps -eq 1) {& $coredir\support\appspicker.ps1}}
 					"9" {Select-Disenabled Transcribe}
-					"0" {$menuselsub = 0}
+					{$_ -like "r"} {$menuselsub = 0}
 				}
 			}
 		}
@@ -241,7 +241,7 @@ while ($true) {
 						Start-Process notepad.exe -Wait -NoNewWindow -ArgumentList "$PSScriptRoot\config.ps1"
 						. $coredir\kernel\config.ps1
 					}
-					"0" {$menuselsub = 0}
+					{$_ -like "r"} {$menuselsub = 0}
 				}
 			}
 			Set-WindowState -State RESTORE -MainWindowHandle (Get-Process -Id $cpid).MainWindowHandle
@@ -251,6 +251,6 @@ while ($true) {
 			& $PSScriptRoot\credits.ps1
 			Set-WindowState -State RESTORE -MainWindowHandle (Get-Process -Id $cpid).MainWindowHandle
 		}
-		"0" {Set-ItemProperty -Path "HKCU:\Software\AutoIDKU" -Name "RebootScript" -Value 0 -Type DWord -Force; Reset-Script}
+		{$_ -like "r"} {Set-ItemProperty -Path "HKCU:\Software\AutoIDKU" -Name "RebootScript" -Value 0 -Type DWord -Force; Reset-Script}
 	}
 }
